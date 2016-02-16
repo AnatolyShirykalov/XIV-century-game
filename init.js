@@ -1,30 +1,38 @@
 $(document).ready(function(){
-    var main_win = document.getElementById("main_win");
-    player.push({
-        name:"",
-        menu:["main","m1","m2","time_with_army","pray","stand","run"],
-        level: 1,
-        spirit:20,
-        army: 500,
-        skill: 1,
-        espionage: 15,
-        coffer: 10,
-        war_craft: 1,
-        wife: 0,
-        oratory: 15,
-        rep:{Horde: 15,Lithuania:15,neighbor:40},
-        lands:[]
-    });
-    player[0].name=prompt("А зовут вас","Имя");
+    var general_block = document.getElementById("general_block");
+    var l = new Land("Ростовское княжество",40);
+    var p = new Player([lands[0]]);
     init_menu(player[0]);
+    general_block.innerHTML = "<div class='name'>" + player[0].name + "</div>";
+    general_block.innerHTML += "<div id='season'>" + "Осень" + "</div>";
+    general_block.innerHTML += "<div id='year'>" + Math.floor(step/4 + 1302) + "</div>";
+    general_block.innerHTML += "<div id='points'>" + points + "</div>";
   })
+
+function Player(lnds ){
+  this.name = prompt("А зовут вас","Имя");
+  this.menu = ["main","Военный советник","m2","Провести время с дружиной","pray","stand","run","Спросить численность войска","Завершить ход"];
+  this.level= 1;
+  this.spirit=20;
+  this.army= 500;
+  this.skill =  1;
+  this.espionage =  15;
+  this.coffer =  10;
+  this.war_craft =  1;
+  this.wife =  0;
+  this.oratory =  15;
+  this.rep = {Horde: 15,Lithuania:15,neighbor:40};
+  this.lands = lnds;
+  player.push(this);
+  this.atack = function(land){alert("atack!!!");}
+}
 
 function Land(name,profit){
   this.name = name;
   this.profit = profit;
   this.occupation = 0.8;
   this.assess = profit;
-}
-Land.prototype.army = function(){
-  return 100000*(1-this.occupation);
+  this.mons = [];
+  lands.push(this);
+  this.army = function(){return Math.floor(100000*(1-this.occupation));}
 }
